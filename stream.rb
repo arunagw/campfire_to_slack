@@ -5,7 +5,7 @@ notifier = Slack::Notifier.new ENV['SLACK_WEBHOOK_URL']
 
 campfire = Tinder::Campfire.new ENV['CAMPFIRE_SUBDOMAIN'], :token => ENV['CAMPFIRE_TOKEN']
 
-room = campfire.rooms.detect { |_room| _room.name == ENV['CAMPFIRE_ROOM'] }
+room = campfire.rooms.detect { |_room| _room.id == ENV['CAMPFIRE_ROOM'] }
 
 room.listen do |message|
   user = message.user
