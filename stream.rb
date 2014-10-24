@@ -26,3 +26,5 @@ rescue => e
   puts "I have failed!! #{e.message}"
   listen_to_campfire
 end
+
+listen_to_campfire
