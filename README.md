@@ -20,4 +20,5 @@ Setup Heroku environment variable to make script work.
     heroku config:set CAMPFIRE_ROOM=myroom CAMPFIRE_SUBDOMAIN=mycompany CAMPFIRE_TOKEN=token-i-have SLACK_WEBHOOK_URL=webhook-from-slack
 
 Scale heroku process by running
+
     heroku ps:scale post_slack=1
