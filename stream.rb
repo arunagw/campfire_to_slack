@@ -13,7 +13,7 @@ def listen_to_campfire
 
     if user
       ping_data = {
-        username: "#{user.name} (Bot)",
+        username: user.name,
         icon_url: user.avatar_url
       }
     else
