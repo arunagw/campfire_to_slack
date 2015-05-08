@@ -1,5 +1,7 @@
 require 'tinder'
 require 'slack-notifier'
+require 'dotenv'
+Dotenv.load
 
 def listen_to_campfire
   notifier = Slack::Notifier.new ENV['SLACK_WEBHOOK_URL']
