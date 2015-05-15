@@ -11,18 +11,18 @@ def listen_to_campfire
   room = campfire.rooms.detect { |_room| _room.id.to_s == ENV['CAMPFIRE_ROOM'] }
 
   room.listen do |message|
+    puts "Message #{message}"
+
     user = message.user
 
-    if user
+    if user && message.body
       ping_data = {
         username: user.name,
         icon_url: user.avatar_url
       }
-    else
-      ping_data = {}
-    end
 
-    notifier.ping message.body.to_s, ping_data
+      notifier.ping message.body.to_s, ping_data
+    end
   end
 rescue => e
   puts "I have failed!! #{e.message}"
