@@ -10,6 +10,7 @@ def listen_to_campfire
 
   room = campfire.rooms.detect { |_room| _room.id.to_s == ENV['CAMPFIRE_ROOM'] }
 
+  puts "Listening room #{room.name}"
   room.listen do |message|
     puts "Message #{message}"
 
