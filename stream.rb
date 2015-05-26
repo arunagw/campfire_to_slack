@@ -1,11 +1,20 @@
 require 'tinder'
 require 'slack-notifier'
 require 'dotenv'
+require 'sucker_punch'
+
 Dotenv.load
 
-def listen_to_campfire
-  notifier = Slack::Notifier.new ENV['SLACK_WEBHOOK_URL']
+class SlackJob
+  include SuckerPunch::Job
 
+  def perform(text, ping_data)
+    notifier = Slack::Notifier.new ENV['SLACK_WEBHOOK_URL']
+    notifier.ping text, ping_data
+  end
+end
+
+def listen_to_campfire
   campfire = Tinder::Campfire.new ENV['CAMPFIRE_SUBDOMAIN'], :token => ENV['CAMPFIRE_TOKEN']
 
   room = campfire.rooms.detect { |_room| _room.id.to_s == ENV['CAMPFIRE_ROOM'] }
@@ -22,7 +31,7 @@ def listen_to_campfire
         icon_url: user.avatar_url
       }
 
-      notifier.ping message.body.to_s, ping_data
+      SlackJob.new.async.perform(message.body.to_s, ping_data)
     end
   end
 rescue => e
